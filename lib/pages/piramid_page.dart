@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Penting untuk FilteringTextInputFormatter
 
 class PiramidPage extends StatefulWidget {
   @override
@@ -19,13 +20,22 @@ class _PiramidPageState extends State<PiramidPage> {
   bool sudahHitung = false;
 
   void hitung() {
-    if (sisi.text.isEmpty || tinggi.text.isEmpty) return;
-    
-    double s = double.parse(sisi.text);
-    double t = double.parse(tinggi.text);
+    // Menggunakan tryParse agar aman jika input kosong atau bukan angka
+    double? s = double.tryParse(sisi.text);
+    double? t = double.tryParse(tinggi.text);
+
+    if (s == null || t == null) {
+      // Menampilkan pesan simpel jika input tidak valid
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Masukkan angka yang bener ya manis~ ✨")),
+      );
+      return;
+    }
 
     setState(() {
+      // Rumus: Luas Alas = Sisi x Sisi
       luas = s * s;
+      // Rumus: Volume = 1/3 * Luas Alas * Tinggi
       volume = (1 / 3) * luas * t;
       sudahHitung = true;
     });
@@ -36,8 +46,7 @@ class _PiramidPageState extends State<PiramidPage> {
     return Scaffold(
       backgroundColor: softPink,
       appBar: AppBar(
-         iconTheme: IconThemeData(color: Colors.white),
-        title: Text("Hitung Piramid ✨", 
+        title: Text("Bangun Piramid ✨", 
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: cutePink,
         centerTitle: true,
@@ -69,9 +78,11 @@ class _PiramidPageState extends State<PiramidPage> {
                     style: TextStyle(color: Colors.brown[400], fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 20),
-                  _buildTextField(sisi, "Panjang Sisi Alas", Icons.square_foot_rounded),
+                  // Input Sisi
+                  _buildTextField(sisi, "Panjang Sisi Alas (contoh: 10.5)", Icons.square_foot_rounded),
                   SizedBox(height: 15),
-                  _buildTextField(tinggi, "Tinggi Piramid", Icons.height_rounded),
+                  // Input Tinggi
+                  _buildTextField(tinggi, "Tinggi Piramid (contoh: 15.2)", Icons.height_rounded),
                 ],
               ),
             ),
@@ -109,11 +120,16 @@ class _PiramidPageState extends State<PiramidPage> {
     );
   }
 
-  // Widget TextField Imut
+  // Widget TextField Imut dengan dukungan Desimal
   Widget _buildTextField(TextEditingController controller, String label, IconData icon) {
     return TextField(
       controller: controller,
-      keyboardType: TextInputType.number,
+      // Memunculkan keyboard angka dengan tombol titik (.)
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      // Mencegah user mengetik huruf, hanya angka dan satu titik yang boleh
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+      ],
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: cutePink),

@@ -18,13 +18,23 @@ class _TotalAngkaState extends State<TotalAngka> {
     if (angka.text.isEmpty) return;
 
     String input = angka.text;
+
+    // Validasi: hanya boleh angka
+    if (!RegExp(r'^[0-9]+$').hasMatch(input)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("3Masukkan angka saja tanpa koma atau huruf"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     int sum = 0;
 
     for (int i = 0; i < input.length; i++) {
-      int? digit = int.tryParse(input[i]);
-      if (digit != null) {
-        sum += digit;
-      }
+      int digit = int.parse(input[i]);
+      sum += digit;
     }
 
     setState(() {
@@ -39,7 +49,6 @@ class _TotalAngkaState extends State<TotalAngka> {
       backgroundColor: softPink,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        // Ganti judul AppBar jadi lebih manis
         title: Text(
           "Hitung Angka Cantik ✨",
           style: TextStyle(
@@ -76,7 +85,6 @@ class _TotalAngkaState extends State<TotalAngka> {
                 children: [
                   Icon(Icons.auto_awesome_rounded, color: cutePink, size: 50),
                   SizedBox(height: 15),
-                  // Ganti instruksi jadi lebih akrab
                   Text(
                     "Tulis angka di sini,\nnanti aku bantu jumlahin yaa~",
                     textAlign: TextAlign.center,
@@ -114,7 +122,6 @@ class _TotalAngkaState extends State<TotalAngka> {
 
             SizedBox(height: 30),
 
-            // Ganti teks tombol jadi lebih seru
             ElevatedButton.icon(
               onPressed: hitung,
               icon: Icon(Icons.auto_awesome_rounded, color: Colors.white),
@@ -163,7 +170,6 @@ class _TotalAngkaState extends State<TotalAngka> {
       ),
       child: Column(
         children: [
-          // Ganti label hasil jadi lebih ekspresif
           Text(
             "TARAA! INI HASILNYA 🧸",
             style: TextStyle(

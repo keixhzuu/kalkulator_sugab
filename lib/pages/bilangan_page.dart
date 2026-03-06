@@ -25,11 +25,20 @@ class _BilanganPageState extends State<BilanganPage> {
 
   void cekBilangan() {
     if (angka.text.isEmpty) return;
-    int n = int.parse(angka.text);
+
+    double n = double.parse(angka.text);
 
     setState(() {
-      hasilGanjilGenap = n % 2 == 0 ? "Bilangan Genap" : "Bilangan Ganjil";
-      hasilPrima = isPrima(n) ? "Bilangan Prima" : "Bukan Prima";
+      if(n % 1 != 0){
+        hasilGanjilGenap = "Bilangan Desimal";
+        hasilPrima = "Bilangan Desimal";
+
+      }else {
+        int bil = n.toInt();
+        hasilGanjilGenap = bil % 2 == 0 ? "Bilangan Genap" : "Bilangan Ganjil";
+        hasilPrima = isPrima(bil) ? "Bilangan Prima" : "Bukan Prima";
+
+      }
     });
   }
 

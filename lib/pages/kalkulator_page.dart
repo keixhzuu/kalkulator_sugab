@@ -15,11 +15,12 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
 
   void tekanTombol(String value) {
     setState(() {
+      // Mencegah double titik dalam satu angka
+      if (value == "." && input.endsWith(".")) return;
       input += value;
     });
   }
 
-  // CLEAR SEMUA
   void clear() {
     setState(() {
       input = "";
@@ -27,22 +28,35 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
     });
   }
 
+  void hapusSatu() {
+    setState(() {
+      if (input.isNotEmpty) {
+        input = input.substring(0, input.length - 1);
+      }
+    });
+  }
+
   void hitung() {
     if (input.isEmpty) return;
 
     try {
+      // Mengganti '-' dengan '+-' agar bisa dipisah (split) dengan '+'
+      // Namun tetap mempertahankan logika angka desimal
       String ekspresi = input.replaceAll('-', '+-');
-      List<String> numbers = ekspresi.split('+');
+      List<String> parts = ekspresi.split('+');
 
-      BigInt total = BigInt.zero;
+      double total = 0;
 
-      for (var n in numbers) {
-        if (n.trim().isEmpty) continue;
-        total += BigInt.parse(n.trim());
+      for (var part in parts) {
+        if (part.trim().isEmpty) continue;
+        // parse ke double untuk mendukung desimal
+        total += double.parse(part.trim());
       }
 
       setState(() {
-        hasil = total.toString();
+        // Jika hasil adalah bilangan bulat (contoh 5.0), tampilkan 5 saja
+        // Jika desimal (contoh 5.5), tampilkan apa adanya
+        hasil = total % 1 == 0 ? total.toInt().toString() : total.toString();
         input = hasil;
       });
     } catch (e) {
@@ -62,6 +76,8 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
               hitung();
             } else if (text == "C") {
               clear();
+            } else if (text == "DEL") {
+              hapusSatu();
             } else {
               tekanTombol(text);
             }
@@ -91,8 +107,8 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
       children: tombolList.map((t) {
         if (t == "+" || t == "-" || t == "=") {
           return tombol(t, warna: deepPink);
-        } else if (t == "C") {
-          return tombol(t, warna: Colors.redAccent);
+        } else if (t == "C" || t == "DEL") {
+          return tombol(t, warna: t == "C" ? Colors.redAccent : Colors.orangeAccent);
         }
         return tombol(t);
       }).toList(),
@@ -104,21 +120,20 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
     return Scaffold(
       backgroundColor: softPink,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
           "Kalkulator ✨",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: cutePink,
         elevation: 0,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // Display
           Expanded(
             child: Container(
               width: double.infinity,
@@ -136,7 +151,7 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
                   Text(
                     hasil,
                     style: const TextStyle(
-                      fontSize: 36,
+                      fontSize: 42,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -144,16 +159,14 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
               ),
             ),
           ),
-
-          // Keypad
           Container(
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 baris(["7", "8", "9", "C"]),
-                baris(["4", "5", "6", "-"]),
-                baris(["1", "2", "3", "+"]),
-                baris(["0", "="]),
+                baris(["4", "5", "6", "DEL"]),
+                baris(["1", "2", "3", "-"]),
+                baris(["0", ".", "+", "="]),
               ],
             ),
           ),

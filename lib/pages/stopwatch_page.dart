@@ -10,9 +10,11 @@ class StopwatchPage extends StatefulWidget {
 
 class _StopwatchPageState extends State<StopwatchPage> {
   final Stopwatch stopwatch = Stopwatch();
-  Timer? timer; // Menggunakan nullable agar lebih aman
+  Timer? timer;
 
-  // Warna tema imut aesthetic
+  List<String> laps = [];
+
+  // Warna tema
   final Color cutePink = const Color(0xFFFFB6C1);
   final Color softPink = const Color(0xFFFFE4E1);
   final Color deepPink = const Color(0xFFFF69B4);
@@ -51,12 +53,22 @@ class _StopwatchPageState extends State<StopwatchPage> {
   void reset() {
     stopwatch.reset();
     timer?.cancel();
-    setState(() {});
+    setState(() {
+      laps.clear();
+    });
+  }
+
+  void lap() {
+    if (stopwatch.isRunning) {
+      setState(() {
+        laps.add(formatTime(stopwatch.elapsedMilliseconds));
+      });
+    }
   }
 
   @override
   void dispose() {
-    timer?.cancel(); // Membersihkan timer saat halaman ditutup
+    timer?.cancel();
     super.dispose();
   }
 
@@ -67,7 +79,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
     return Scaffold(
       backgroundColor: softPink,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Stopwatch ✨",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -79,12 +91,13 @@ class _StopwatchPageState extends State<StopwatchPage> {
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Tampilan Lingkaran Stopwatch
-            Container(
+      body: Column(
+        children: [
+          const SizedBox(height: 40),
+
+          // Lingkaran Stopwatch
+          Center(
+            child: Container(
               width: 250,
               height: 250,
               decoration: BoxDecoration(
@@ -120,42 +133,91 @@ class _StopwatchPageState extends State<StopwatchPage> {
                 ],
               ),
             ),
+          ),
 
-            const SizedBox(height: 50),
+          const SizedBox(height: 40),
 
-            // Tombol Kontrol
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildActionButton(
-                  onPressed: start,
-                  label: "Mulai",
-                  icon: Icons.play_arrow_rounded,
-                  color: Colors.green[300]!,
-                ),
-                const SizedBox(width: 15),
-                _buildActionButton(
-                  onPressed: stop,
-                  label: "Berhenti",
-                  icon: Icons.stop_rounded,
-                  color: deepPink,
-                ),
-                const SizedBox(width: 15),
-                _buildActionButton(
-                  onPressed: reset,
-                  label: "Ulang",
-                  icon: Icons.refresh_rounded,
-                  color: Colors.orange[300]!,
-                ),
-              ],
+          // Tombol Kontrol
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildActionButton(
+                onPressed: start,
+                label: "Mulai",
+                icon: Icons.play_arrow_rounded,
+                color: Colors.green[300]!,
+              ),
+              const SizedBox(width: 15),
+              _buildActionButton(
+                onPressed: stop,
+                label: "Stop",
+                icon: Icons.stop_rounded,
+                color: deepPink,
+              ),
+              const SizedBox(width: 15),
+              _buildActionButton(
+                onPressed: reset,
+                label: "Reset",
+                icon: Icons.refresh_rounded,
+                color: Colors.orange[300]!,
+              ),
+              const SizedBox(width: 15),
+              _buildActionButton(
+                onPressed: lap,
+                label: "Lap",
+                icon: Icons.flag_rounded,
+                color: Colors.blue[300]!,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 30),
+
+          // List Lap Time
+          Expanded(
+            child: ListView.builder(
+              itemCount: laps.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 30,
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: cutePink),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Lap ${index + 1}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown[700],
+                        ),
+                      ),
+                      Text(
+                        laps[index],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  // Widget Helper untuk tombol yang estetik
+  // Widget tombol
   Widget _buildActionButton({
     required VoidCallback onPressed,
     required String label,
