@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
 import 'pages/login_page.dart';
 
 void main() {
@@ -12,8 +11,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tugas Mobile',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true, // Menggunakan desain Material 3 yang lebih modern
+      ),
+      home: LoginPage(), // Sekarang langsung ke Login
     );
   }
 }

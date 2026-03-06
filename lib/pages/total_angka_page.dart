@@ -8,33 +8,182 @@ class TotalAngka extends StatefulWidget {
 class _TotalAngkaState extends State<TotalAngka> {
   TextEditingController angka = TextEditingController();
   int total = 0;
+  bool sudahHitung = false;
+
+  final Color cutePink = Color(0xFFFFB6C1);
+  final Color softPink = Color(0xFFFFE4E1);
+  final Color deepPink = Color(0xFFFF69B4);
 
   void hitung() {
+    if (angka.text.isEmpty) return;
+
     String input = angka.text;
     int sum = 0;
 
     for (int i = 0; i < input.length; i++) {
-      sum += int.parse(input[i]);
+      int? digit = int.tryParse(input[i]);
+      if (digit != null) {
+        sum += digit;
+      }
     }
 
     setState(() {
       total = sum;
+      sudahHitung = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Jumlah Total Angka")),
-      body: Padding(
-        padding: EdgeInsets.all(20),
+      backgroundColor: softPink,
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        // Ganti judul AppBar jadi lebih manis
+        title: Text(
+          "Hitung Angka Cantik ✨",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.1,
+          ),
+        ),
+        backgroundColor: cutePink,
+        centerTitle: true,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(25),
         child: Column(
           children: [
-            TextField(controller: angka, keyboardType: TextInputType.number),
-            ElevatedButton(onPressed: hitung, child: Text("Hitung")),
-            Text("Total: $total")
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: cutePink.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Icon(Icons.auto_awesome_rounded, color: cutePink, size: 50),
+                  SizedBox(height: 15),
+                  // Ganti instruksi jadi lebih akrab
+                  Text(
+                    "Tulis angka di sini,\nnanti aku bantu jumlahin yaa~",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.brown[400],
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: angka,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "ketik di sini...",
+                      hintStyle: TextStyle(color: cutePink.withOpacity(0.5)),
+                      filled: true,
+                      fillColor: softPink.withOpacity(0.2),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 30),
+
+            // Ganti teks tombol jadi lebih seru
+            ElevatedButton.icon(
+              onPressed: hitung,
+              icon: Icon(Icons.auto_awesome_rounded, color: Colors.white),
+              label: Text(
+                "HITUNG SEKARANG",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: deepPink,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: StadiumBorder(),
+                elevation: 5,
+              ),
+            ),
+
+            SizedBox(height: 40),
+
+            if (sudahHitung) _buildResultCard(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildResultCard() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [cutePink, deepPink],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: deepPink.withOpacity(0.4),
+            blurRadius: 15,
+            offset: Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Ganti label hasil jadi lebih ekspresif
+          Text(
+            "TARAA! INI HASILNYA 🧸",
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            "$total",
+            style: TextStyle(
+              fontSize: 55,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 5),
+          Icon(Icons.stars_rounded, color: Colors.white, size: 25),
+        ],
       ),
     );
   }
