@@ -19,8 +19,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: softPink, // Latar belakang pink lembut
       appBar: AppBar(
-        title: Text("Menu Utama ✨", 
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(
+          "Menu Utama ✨",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: cutePink,
         centerTitle: true,
         elevation: 0,
@@ -42,9 +44,9 @@ class HomePage extends StatelessWidget {
             Text(
               "Pilih Menu Favoritmu:",
               style: TextStyle(
-                fontSize: 18, 
-                fontWeight: FontWeight.bold, 
-                color: Colors.brown[600]
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown[600],
               ),
             ),
             SizedBox(height: 20),
@@ -55,12 +57,42 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 15,
                 children: [
                   // Nama class (DataKelompok, KalkulatorPage, dll) tetap sama seperti kodinganmu
-                  menuButton(context, "Data Kelompok", Icons.group_rounded, DataKelompok()),
-                  menuButton(context, "Kalkulator", Icons.calculate_rounded, KalkulatorPage()),
-                  menuButton(context, "Bilangan", Icons.numbers_rounded, BilanganPage()),
-                  menuButton(context, "Total Angka", Icons.summarize_rounded, TotalAngka()),
-                  menuButton(context, "Stopwatch", Icons.timer_rounded, StopwatchPage()),
-                  menuButton(context, "Piramid", Icons.change_history_rounded, PiramidPage()),
+                  menuButton(
+                    context,
+                    "Data Kelompok",
+                    Icons.group_rounded,
+                    DataKelompok(),
+                  ),
+                  menuButton(
+                    context,
+                    "Kalkulator",
+                    Icons.calculate_rounded,
+                    KalkulatorPage(),
+                  ),
+                  menuButton(
+                    context,
+                    " Cek Bilangan",
+                    Icons.numbers_rounded,
+                    BilanganPage(),
+                  ),
+                  menuButton(
+                    context,
+                    "Total Angka",
+                    Icons.summarize_rounded,
+                    TotalAngka(),
+                  ),
+                  menuButton(
+                    context,
+                    "Stopwatch",
+                    Icons.timer_rounded,
+                    StopwatchPage(),
+                  ),
+                  menuButton(
+                    context,
+                    "Piramid",
+                    Icons.change_history_rounded,
+                    PiramidPage(),
+                  ),
                 ],
               ),
             ),
@@ -71,7 +103,12 @@ class HomePage extends StatelessWidget {
   }
 
   // Fungsi menuButton yang sudah dipercantik tampilannya
-  Widget menuButton(BuildContext context, String title, IconData icon, Widget page) {
+  Widget menuButton(
+    BuildContext context,
+    String title,
+    IconData icon,
+    Widget page,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) => page));
@@ -135,9 +172,9 @@ class HomePage extends StatelessWidget {
             style: ElevatedButton.styleFrom(backgroundColor: deepPink),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
-                context, 
-                MaterialPageRoute(builder: (context) => LoginPage()), 
-                (route) => false
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false,
               );
             },
             child: Text("Ya, Keluar", style: TextStyle(color: Colors.white)),
