@@ -46,8 +46,11 @@ class _PiramidPageState extends State<PiramidPage> {
     return Scaffold(
       backgroundColor: softPink,
       appBar: AppBar(
-        title: Text("Bangun Piramid ✨", 
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          "Bangun Piramid ✨",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: cutePink,
         centerTitle: true,
         elevation: 0,
@@ -66,7 +69,11 @@ class _PiramidPageState extends State<PiramidPage> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
-                  BoxShadow(color: cutePink.withOpacity(0.3), blurRadius: 10, offset: Offset(0, 5)),
+                  BoxShadow(
+                    color: cutePink.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
                 ],
               ),
               child: Column(
@@ -75,14 +82,25 @@ class _PiramidPageState extends State<PiramidPage> {
                   SizedBox(height: 10),
                   Text(
                     "Masukkan ukuran piramidnya ya~",
-                    style: TextStyle(color: Colors.brown[400], fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                      color: Colors.brown[400],
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                   SizedBox(height: 20),
                   // Input Sisi
-                  _buildTextField(sisi, "Panjang Sisi Alas (contoh: 10.5)", Icons.square_foot_rounded),
+                  _buildTextField(
+                    sisi,
+                    "Panjang Sisi Alas (contoh: 10.5)",
+                    Icons.square_foot_rounded,
+                  ),
                   SizedBox(height: 15),
                   // Input Tinggi
-                  _buildTextField(tinggi, "Tinggi Piramid (contoh: 15.2)", Icons.height_rounded),
+                  _buildTextField(
+                    tinggi,
+                    "Tinggi Piramid (contoh: 15.2)",
+                    Icons.height_rounded,
+                  ),
                 ],
               ),
             ),
@@ -93,8 +111,13 @@ class _PiramidPageState extends State<PiramidPage> {
             ElevatedButton.icon(
               onPressed: hitung,
               icon: Icon(Icons.auto_fix_high_rounded, color: Colors.white),
-              label: Text("HITUNG SEKARANG ✨", 
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              label: Text(
+                "HITUNG SEKARANG ✨",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: deepPink,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -109,9 +132,17 @@ class _PiramidPageState extends State<PiramidPage> {
             if (sudahHitung)
               Column(
                 children: [
-                  _buildResultCard("Luas Alas", luas.toStringAsFixed(2), Icons.aspect_ratio_rounded),
+                  _buildResultCard(
+                    "Luas Alas",
+                    luas.toStringAsFixed(2),
+                    Icons.aspect_ratio_rounded,
+                  ),
                   SizedBox(height: 15),
-                  _buildResultCard("Volume", volume.toStringAsFixed(2), Icons.view_in_ar_rounded),
+                  _buildResultCard(
+                    "Volume",
+                    volume.toStringAsFixed(2),
+                    Icons.view_in_ar_rounded,
+                  ),
                 ],
               ),
           ],
@@ -121,7 +152,11 @@ class _PiramidPageState extends State<PiramidPage> {
   }
 
   // Widget TextField Imut dengan dukungan Desimal
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon,
+  ) {
     return TextField(
       controller: controller,
       // Memunculkan keyboard angka dengan tombol titik (.)
@@ -165,7 +200,14 @@ class _PiramidPageState extends State<PiramidPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title, style: TextStyle(color: Colors.grey, fontSize: 12)),
-              Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.brown[700])),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown[700],
+                ),
+              ),
             ],
           ),
         ],
