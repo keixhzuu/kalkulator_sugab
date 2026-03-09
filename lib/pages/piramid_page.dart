@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Penting untuk FilteringTextInputFormatter
+import 'package:flutter/services.dart'; 
 
 class PiramidPage extends StatefulWidget {
+  const PiramidPage({super.key});
+
   @override
-  _PiramidPageState createState() => _PiramidPageState();
+  State<PiramidPage> createState() => _PiramidPageState();
 }
 
 class _PiramidPageState extends State<PiramidPage> {
   TextEditingController sisi = TextEditingController();
   TextEditingController tinggi = TextEditingController();
 
-  // Warna tema imut aesthetic
   final Color cutePink = Color(0xFFFFB6C1);
   final Color softPink = Color(0xFFFFE4E1);
   final Color deepPink = Color(0xFFFF69B4);
@@ -20,12 +21,10 @@ class _PiramidPageState extends State<PiramidPage> {
   bool sudahHitung = false;
 
   void hitung() {
-    // Menggunakan tryParse agar aman jika input kosong atau bukan angka
     double? s = double.tryParse(sisi.text);
     double? t = double.tryParse(tinggi.text);
 
     if (s == null || t == null) {
-      // Menampilkan pesan simpel jika input tidak valid
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Masukkan angka yang bener ya manis~ ✨")),
       );
@@ -33,9 +32,7 @@ class _PiramidPageState extends State<PiramidPage> {
     }
 
     setState(() {
-      // Rumus: Luas Alas = Sisi x Sisi
       luas = s * s;
-      // Rumus: Volume = 1/3 * Luas Alas * Tinggi
       volume = (1 / 3) * luas * t;
       sudahHitung = true;
     });
@@ -70,7 +67,7 @@ class _PiramidPageState extends State<PiramidPage> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: cutePink.withOpacity(0.3),
+                    color: cutePink.withValues(alpha:0.3),
                     blurRadius: 10,
                     offset: Offset(0, 5),
                   ),
@@ -88,14 +85,12 @@ class _PiramidPageState extends State<PiramidPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // Input Sisi
                   _buildTextField(
                     sisi,
                     "Panjang Sisi Alas (contoh: 10.5)",
                     Icons.square_foot_rounded,
                   ),
                   SizedBox(height: 15),
-                  // Input Tinggi
                   _buildTextField(
                     tinggi,
                     "Tinggi Piramid (contoh: 15.2)",
@@ -107,7 +102,6 @@ class _PiramidPageState extends State<PiramidPage> {
 
             SizedBox(height: 30),
 
-            // Tombol Hitung
             ElevatedButton.icon(
               onPressed: hitung,
               icon: Icon(Icons.auto_fix_high_rounded, color: Colors.white),
@@ -128,7 +122,6 @@ class _PiramidPageState extends State<PiramidPage> {
 
             SizedBox(height: 30),
 
-            // Kartu Hasil
             if (sudahHitung)
               Column(
                 children: [
@@ -151,7 +144,7 @@ class _PiramidPageState extends State<PiramidPage> {
     );
   }
 
-  // Widget TextField Imut dengan dukungan Desimal
+  
   Widget _buildTextField(
     TextEditingController controller,
     String label,
@@ -159,9 +152,7 @@ class _PiramidPageState extends State<PiramidPage> {
   ) {
     return TextField(
       controller: controller,
-      // Memunculkan keyboard angka dengan tombol titik (.)
       keyboardType: TextInputType.numberWithOptions(decimal: true),
-      // Mencegah user mengetik huruf, hanya angka dan satu titik yang boleh
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
       ],
@@ -170,7 +161,7 @@ class _PiramidPageState extends State<PiramidPage> {
         labelStyle: TextStyle(color: cutePink),
         prefixIcon: Icon(icon, color: cutePink),
         filled: true,
-        fillColor: softPink.withOpacity(0.2),
+        fillColor: softPink.withValues(alpha:0.2),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
@@ -179,7 +170,6 @@ class _PiramidPageState extends State<PiramidPage> {
     );
   }
 
-  // Widget Kartu Hasil
   Widget _buildResultCard(String title, String value, IconData icon) {
     return Container(
       width: double.infinity,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class KalkulatorPage extends StatefulWidget {
+  const KalkulatorPage({super.key});
+
   @override
   State<KalkulatorPage> createState() => _KalkulatorPageState();
 }
@@ -40,8 +42,6 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
     if (input.isEmpty) return;
 
     try {
-      // Mengganti '-' dengan '+-' agar bisa dipisah (split) dengan '+'
-      // Namun tetap mempertahankan logika angka desimal
       String ekspresi = input.replaceAll('-', '+-');
       List<String> parts = ekspresi.split('+');
 
@@ -49,13 +49,10 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
 
       for (var part in parts) {
         if (part.trim().isEmpty) continue;
-        // parse ke double untuk mendukung desimal
         total += double.parse(part.trim());
       }
 
       setState(() {
-        // Jika hasil adalah bilangan bulat (contoh 5.0), tampilkan 5 saja
-        // Jika desimal (contoh 5.5), tampilkan apa adanya
         hasil = total % 1 == 0 ? total.toInt().toString() : total.toString();
         input = hasil;
       });
@@ -108,7 +105,10 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
         if (t == "+" || t == "-" || t == "=") {
           return tombol(t, warna: deepPink);
         } else if (t == "C" || t == "DEL") {
-          return tombol(t, warna: t == "C" ? Colors.redAccent : Colors.orangeAccent);
+          return tombol(
+            t,
+            warna: t == "C" ? Colors.redAccent : Colors.orangeAccent,
+          );
         }
         return tombol(t);
       }).toList(),

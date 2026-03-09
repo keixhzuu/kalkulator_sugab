@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-// Pastikan semua import ini sesuai dengan nama file kamu ya
+
 import 'data_kelompok_page.dart';
 import 'kalkulator_page.dart';
 import 'bilangan_page.dart';
 import 'total_angka_page.dart';
 import 'stopwatch_page.dart';
 import 'piramid_page.dart';
-import 'login_page.dart'; // Ditambahkan untuk fungsi logout jika diperlukan
+import 'login_page.dart'; 
 
 class HomePage extends StatelessWidget {
-  // Definisi warna tema imut
-  final Color cutePink = Color(0xFFFFB6C1);
-  final Color softPink = Color(0xFFFFE4E1);
-  final Color deepPink = Color(0xFFFF69B4);
+ const HomePage({super.key});
+
+  static const Color cutePink = Color(0xFFFFB6C1);
+  static const Color softPink = Color(0xFFFFE4E1);
+  static const Color deepPink = Color(0xFFFF69B4);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: softPink, // Latar belakang pink lembut
+      backgroundColor: softPink, 
       appBar: AppBar(
         title: Text(
           "Menu Utama ✨",
@@ -52,11 +53,11 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             Expanded(
               child: GridView.count(
-                crossAxisCount: 2, // Menampilkan 2 kolom agar lebih manis
+                crossAxisCount: 2, 
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
                 children: [
-                  // Nama class (DataKelompok, KalkulatorPage, dll) tetap sama seperti kodinganmu
+                  
                   menuButton(
                     context,
                     "Data Kelompok",
@@ -102,7 +103,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Fungsi menuButton yang sudah dipercantik tampilannya
+  
   Widget menuButton(
     BuildContext context,
     String title,
@@ -119,7 +120,7 @@ class HomePage extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: cutePink.withOpacity(0.3),
+              color: cutePink.withValues(alpha:0.3),
               blurRadius: 10,
               offset: Offset(0, 5),
             ),
@@ -155,7 +156,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Dialog Logout agar aplikasi lebih fungsional
+  
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,

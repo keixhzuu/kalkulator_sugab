@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TotalAngka extends StatefulWidget {
+  const TotalAngka({super.key});
   @override
-  _TotalAngkaState createState() => _TotalAngkaState();
+  State<TotalAngka> createState() => _TotalAngkaState();
 }
 
 class _TotalAngkaState extends State<TotalAngka> {
@@ -19,7 +20,6 @@ class _TotalAngkaState extends State<TotalAngka> {
 
     String input = angka.text;
 
-    // Validasi: hanya boleh angka
     if (!RegExp(r'^[0-9]+$').hasMatch(input)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -75,7 +75,7 @@ class _TotalAngkaState extends State<TotalAngka> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: cutePink.withOpacity(0.3),
+                    color: cutePink.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: Offset(0, 5),
                   ),
@@ -106,9 +106,11 @@ class _TotalAngkaState extends State<TotalAngka> {
                     ),
                     decoration: InputDecoration(
                       hintText: "ketik di sini...",
-                      hintStyle: TextStyle(color: cutePink.withOpacity(0.5)),
+                      hintStyle: TextStyle(
+                        color: cutePink.withValues(alpha: 0.5),
+                      ),
                       filled: true,
-                      fillColor: softPink.withOpacity(0.2),
+                      fillColor: softPink.withValues(alpha: 0.2),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none,
@@ -162,7 +164,7 @@ class _TotalAngkaState extends State<TotalAngka> {
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: deepPink.withOpacity(0.4),
+            color: deepPink.withValues(alpha: 0.4),
             blurRadius: 15,
             offset: Offset(0, 8),
           ),
@@ -173,7 +175,7 @@ class _TotalAngkaState extends State<TotalAngka> {
           Text(
             "TARAA! INI HASILNYA 🧸",
             style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5,
             ),

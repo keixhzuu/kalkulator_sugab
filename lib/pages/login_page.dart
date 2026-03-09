@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart'; // Pastikan file home_page.dart kamu sudah ada
+import '../pages/home_page.dart'; 
 
 void main() {
   runApp(MaterialApp(home: LoginPage(), debugShowCheckedModeBanner: false));
 }
 
-// --- CONTROLLER & LOGIC ---
 class LoginController {
   final TextEditingController userLogin = TextEditingController();
   final TextEditingController passLogin = TextEditingController();
@@ -14,7 +13,6 @@ class LoginController {
     String username = userLogin.text;
     String password = passLogin.text;
 
-    // Validasi input kosong
     if (username.isEmpty || password.isEmpty) {
       _showSnackBar(
         context,
@@ -24,8 +22,8 @@ class LoginController {
       return;
     }
 
-    // Login logic pake IF-ELSE (Username: kalkulator, Password: sugab)
-    if (username == "coba" && password == "coba") {
+    
+    if (username == "kalkulator" && password == "sugab") {
       _showSnackBar(
         context,
         "Berhasil masuk! Selamat datang ✨",
@@ -57,7 +55,6 @@ class LoginController {
   }
 }
 
-// --- VIEW (LOGIN PAGE) ---
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
@@ -86,7 +83,7 @@ class LoginPage extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: cutePink.withOpacity(0.4),
+                      color: cutePink.withValues(alpha:0.4),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -132,7 +129,7 @@ class LoginPage extends StatelessWidget {
                     gradient: LinearGradient(colors: [cutePink, deepPink]),
                     boxShadow: [
                       BoxShadow(
-                        color: deepPink.withOpacity(0.3),
+                        color: deepPink.withValues(alpha:0.3),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -157,7 +154,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // Widget Input Reusable
   Widget _buildInput({
     required TextEditingController controller,
     required String hint,
@@ -169,7 +165,7 @@ class LoginPage extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
+          BoxShadow(color: Colors.black.withValues(alpha:0.05), blurRadius: 10),
         ],
       ),
       child: TextField(

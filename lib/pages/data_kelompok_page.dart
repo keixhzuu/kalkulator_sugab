@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DataKelompok extends StatelessWidget {
-  // Warna tema imut
-  final Color cutePink = Color(0xFFFFB6C1);
-  final Color softPink = Color(0xFFFFE4E1);
-  final Color deepPink = Color(0xFFFF69B4);
+  const DataKelompok({super.key});
+
+  static const Color cutePink = Color(0xFFFFB6C1);
+  static const Color softPink = Color(0xFFFFE4E1);
+  static const Color deepPink = Color(0xFFFF69B4);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,6 @@ class DataKelompok extends StatelessWidget {
             ),
             SizedBox(height: 20),
             
-            // Daftar Anggota menggunakan widget custom agar rapi
             _buildMemberCard("Melania Intan Sagita", "123230005"),
             _buildMemberCard("Fadilah Nur Sabiyyah", "123230006"),
             _buildMemberCard("Miftah Sari Nurjana", "123230022"),
@@ -51,7 +51,6 @@ class DataKelompok extends StatelessWidget {
     );
   }
 
-  // Widget kartu anggota yang imut
   Widget _buildMemberCard(String nama, String nim) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
@@ -61,7 +60,7 @@ class DataKelompok extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: cutePink.withOpacity(0.3),
+            color: cutePink.withValues(alpha:0.3),
             blurRadius: 10,
             offset: Offset(0, 5),
           ),

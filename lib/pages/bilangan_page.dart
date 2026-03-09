@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BilanganPage extends StatefulWidget {
+  const BilanganPage({super.key});
+
   @override
-  _BilanganPageState createState() => _BilanganPageState();
+   State<BilanganPage> createState() => _BilanganPageState();
 }
 
 class _BilanganPageState extends State<BilanganPage> {
@@ -10,7 +12,7 @@ class _BilanganPageState extends State<BilanganPage> {
   String hasilGanjilGenap = "";
   String hasilPrima = "";
 
-  // Warna tema imut
+  
   final Color cutePink = Color(0xFFFFB6C1);
   final Color softPink = Color(0xFFFFE4E1);
   final Color deepPink = Color(0xFFFF69B4);
@@ -71,7 +73,7 @@ class _BilanganPageState extends State<BilanganPage> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: cutePink.withOpacity(0.3),
+                    color: cutePink.withValues(alpha:0.3),
                     blurRadius: 10,
                     offset: Offset(0, 5),
                   ),
@@ -101,9 +103,9 @@ class _BilanganPageState extends State<BilanganPage> {
                     ),
                     decoration: InputDecoration(
                       hintText: "masukkan angka",
-                      hintStyle: TextStyle(color: cutePink.withOpacity(0.5)),
+                      hintStyle: TextStyle(color: cutePink.withValues(alpha:0.5)),
                       filled: true,
-                      fillColor: softPink.withOpacity(0.2),
+                      fillColor: softPink.withValues(alpha:0.2),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none,
@@ -160,7 +162,6 @@ class _BilanganPageState extends State<BilanganPage> {
     );
   }
 
-  // Widget Kartu Hasil yang Imut
   Widget _buildResultCard(String title, String value, IconData icon) {
     return Container(
       width: double.infinity,

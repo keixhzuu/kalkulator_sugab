@@ -14,7 +14,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
 
   List<String> laps = [];
 
-  // Warna tema
+  
   final Color cutePink = const Color(0xFFFFB6C1);
   final Color softPink = const Color(0xFFFFE4E1);
   final Color deepPink = const Color(0xFFFF69B4);
@@ -95,7 +95,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
         children: [
           const SizedBox(height: 40),
 
-          // Lingkaran Stopwatch
+          
           Center(
             child: Container(
               width: 250,
@@ -105,7 +105,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: cutePink.withOpacity(0.5),
+                    color: cutePink.withValues(alpha:0.5),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -137,7 +137,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
 
           const SizedBox(height: 40),
 
-          // Tombol Kontrol
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -173,7 +173,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
 
           const SizedBox(height: 30),
 
-          // List Lap Time
+          
           Expanded(
             child: ListView.builder(
               itemCount: laps.length,
@@ -217,7 +217,6 @@ class _StopwatchPageState extends State<StopwatchPage> {
     );
   }
 
-  // Widget tombol
   Widget _buildActionButton({
     required VoidCallback onPressed,
     required String label,
